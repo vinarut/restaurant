@@ -16,11 +16,18 @@ class DataBase
 
     /**
      * DataBase constructor.
-     * @param $connect
+     * @param $dsn
+     * @param $user
+     * @param $password
      */
     public function __construct($dsn, $user, $password)
     {
-        $this->connect = new PDO($dsn, $user, $password);
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_CASE => PDO::CASE_NATURAL,
+            PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING
+        ];
+        $this->connect = new PDO($dsn, $user, $password, $options);
     }
 
     /**
@@ -40,7 +47,7 @@ class DataBase
 
     /**
      * @param $statement
-     * @return mixed
+     * @return bool|PDOStatement
      */
     public function prepare($statement)
     {
@@ -49,10 +56,18 @@ class DataBase
 
     /**
      * @param $statement
-     * @return mixed
+     * @return bool|PDOStatement
      */
     public function query($statement)
     {
         return $this->connect->query($statement);
+    }
+
+    /**
+     * DataBase destructor
+     */
+    public function __destruct()
+    {
+        $this->connect = null;
     }
 }
