@@ -13,22 +13,27 @@ return [
 		'action' => 'index'
 	],
 
-	'table/category' => [
+	'index' => [
+		'controller' => 'main',
+		'action' => 'index'
+	],
+
+	'category' => [
 		'controller' => 'table',
 		'action' => 'category'
 	],
 
-	'table/dish' => [
+	'dish' => [
 		'controller' => 'table',
 		'action' => 'dish'
 	],
 
-	'table/dish_ingredients' => [
+	'dish_ingredients' => [
 		'controller' => 'table',
 		'action' => 'dish_ingredients'
 	],
 
-	'table/ingredient' => [
+	'ingredient' => [
 		'controller' => 'table',
 		'action' => 'ingredient'
 	],

@@ -11,7 +11,14 @@ namespace application\core;
 
 class Router
 {
+	/**
+	 * @var array
+	 */
     protected $routes = [];
+
+	/**
+	 * @var array
+	 */
     protected $params = [];
 
     /**
@@ -22,7 +29,10 @@ class Router
 		$this->add(include 'application/config/routes.php');
     }
 
-    private function add($array)
+	/**
+	 * @param $array
+	 */
+	private function add($array)
     {
 		foreach ($array as $key => $value) {
 			$key = '#^'.$key.'$#';
@@ -30,7 +40,10 @@ class Router
 		}
     }
 
-    private function match()
+	/**
+	 * @return bool
+	 */
+	private function match()
     {
 		$url = trim($_SERVER['REQUEST_URI'], '/');
 		foreach ($this->routes as $key => $value) {
@@ -42,17 +55,26 @@ class Router
 		return false;
     }
 
-    public function run()
+	/**
+	 *
+	 */
+	public function run()
     {
 		if ($this->match()) {
-			$controller = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller.php';
-			if (class_exists($controller)) {
-				echo $controller;
+			$path = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller';
+			if (class_exists($path)) {
+				$action = $this->params['action'].'Action';
+				if (method_exists($path, $action)) {
+					$controller = new $path($this->params);
+					$controller->$action();
+				} else {
+					View::errorCode(404);
+				}
 			} else {
-				echo 'Not found '.$controller;
+				View::errorCode(404);
 			}
 		} else {
-			echo '404';
+			View::errorCode(404);
 		}
     }
 }
