@@ -12,6 +12,23 @@
 	<title><?php echo $title; ?></title>
 </head>
 <body>
+	<nav class="navbar navbar-expand-md bg-light justify-content-center">
+		<ul class="navbar-nav">
+				<li class="nav-item">
+						<a class="nav-link" href="category">Категории</a>
+				</li>
+				<li class="nav-item">
+						<a class="nav-link" href="dish">Блюда</a>
+				</li>
+				<li class="nav-item">
+						<a class="nav-link" href="dish_ingredients">Состав</a>
+				</li>
+				<li class="nav-item">
+						<a class="nav-link" href="ingredient">Ингредиент</a>
+				</li>
+
+		</ul>
+	</nav>
 	<?php echo $content; ?>
 </body>
 </html>
