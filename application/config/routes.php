@@ -19,22 +19,22 @@ return [
 	],
 
 	'category' => [
-		'controller' => 'table',
+		'controller' => 'forms',
 		'action' => 'category'
 	],
 
 	'dish' => [
-		'controller' => 'table',
+		'controller' => 'forms',
 		'action' => 'dish'
 	],
 
 	'dish_ingredients' => [
-		'controller' => 'table',
+		'controller' => 'forms',
 		'action' => 'dish_ingredients'
 	],
 
 	'ingredient' => [
-		'controller' => 'table',
+		'controller' => 'forms',
 		'action' => 'ingredient'
 	],
 

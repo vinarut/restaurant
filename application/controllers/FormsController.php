@@ -11,7 +11,7 @@ namespace application\controllers;
 
 use application\core\Controller;
 
-class TableController extends Controller
+class FormsController extends Controller
 {
 
 	/**
