@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-		<form action="index.php" method="post" class="col-lg-12">
+		<form action="" method="post" class="col-lg-12">
 			<div class="form-group">
 				<label class="label" for="inputIdIngredient">Id ингредиента</label>
 				<input type="text" class="form-control" id="inputIdIngredient" placeholder="Id ингредиента"
@@ -10,7 +10,8 @@
 					   name="weight">
 			</div>
 			<div class="btn-group">
-				<input type="submit" class="btn btn-success btn-md col-lg-12" value="Добавить" />
+				<input type="submit" class="btn btn-success btn-md col-lg-12" value="Добавить"
+				       name="addDishIngredients"/>
 			</div>
 		</form>
 	</div>

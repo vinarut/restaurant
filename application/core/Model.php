@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vlad
- * Date: 22.10.2018
- * Time: 21:01
- */
 
-namespace src;
+namespace application\core;
 
 
-class Model
+use application\lib\DataBase;
+use Exception;
+use PDO;
+
+abstract class Model
 {
     /**
      * @var array
@@ -24,7 +22,7 @@ class Model
     /**
      * @var $DataBase
      */
-    protected $connection;
+    protected $dataBase;
 
     /**
      * @var $table
@@ -36,18 +34,26 @@ class Model
      */
     protected $primary;
 
-    /**
-     * Model constructor.
-     * @param DataBase $connection
-     * @param null $id
-     */
-    public function __construct(DataBase $connection, $id = null)
+	/**
+	 * Model constructor.
+	 * @param DataBase $dataBase
+	 * @param null $id
+	 */
+    public function __construct(DataBase $dataBase, $id = null)
     {
-        $this->connection = $connection;
+        $this->dataBase = $dataBase;
         $this->init();
         if($id)
             $this->load($id);
     }
+
+	/**
+	 * @return array
+	 */
+	public function getAttributes()
+	{
+		return $this->attributes;
+	}
 
     /**
      * @return bool
@@ -56,7 +62,7 @@ class Model
     {
         $attrs = $this->queryBuilder();
         $sql = "INSERT INTO ".$this->table." SET " . implode(", ", $attrs);
-        $sth = $this->connection->prepare($sql);
+        $sth = $this->dataBase->prepare($sql);
         $i = 1;
         foreach(array_keys($attrs) as $key) {
             $param = isset($this->attributes[$key])? $this->attributes[$key]: null;
@@ -73,7 +79,7 @@ class Model
     {
         $attrs = $this->queryBuilder();
         $sql = "UPDATE ".$this->table." SET " . implode(", ", $attrs) . " WHERE " . $this->primary . "=?";
-        $sth = $this->connection->prepare($sql);
+        $sth = $this->dataBase->prepare($sql);
         $i = 1;
         foreach(array_keys($attrs) as $key) {
             $param = isset($this->attributes[$key])? $this->attributes[$key]: null;
@@ -90,7 +96,7 @@ class Model
     public function delete()
     {
         $sql = "DELETE FROM ".$this->table." WHERE " . $this->primary . "=?";
-        $sth = $this->connection->prepare($sql);
+        $sth = $this->dataBase->prepare($sql);
         $sth->bindParam(1, $this->attributes[$this->primary], PDO::PARAM_INT);
         return $sth->execute();
     }
@@ -100,11 +106,11 @@ class Model
      */
     public function load($id)
     {
-        $sql = "SELECT * FROM ".$this->table." WHERE " . $this->primary . "=?";
-        $sth = $this->connection->prepare($sql);
+        $sql = "SELECT * FROM ".$this->table/*." WHERE " . $this->primary . "=?"*/;
+        $sth = $this->dataBase->prepare($sql);
         $sth->bindParam(1, $id, PDO::PARAM_INT);
         $sth->execute();
-        $this->attributes = $sth->fetch(PDO::FETCH_ASSOC);
+        $this->attributes = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -113,16 +119,17 @@ class Model
     private function init()
     {
         $sql = "SHOW COLUMNS FROM ".$this->table;
-        $result = $this->connection->query($sql);
+        $result = $this->dataBase->query($sql);
         foreach($result as $row) {
             $this->metaData[] = $row['Field'];
         }
     }
 
-    /**
-     * @param $name
-     * @return mixed|null
-     */
+	/**
+	 * @param $name
+	 * @return mixed|null
+	 * @throws Exception
+	 */
     public function __get($name)
     {
         if(isset($this->metaData[$name])) {
@@ -131,10 +138,11 @@ class Model
         throw new Exception("Invalid attribute `".$name."`");
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
+	/**
+	 * @param $name
+	 * @param $value
+	 * @throws Exception
+	 */
     public function __set($name, $value)
     {
         if(isset($this->metaData[$name])) {

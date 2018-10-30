@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vladislav
- * Date: 28.10.2018
- * Time: 21:43
- */
 
 namespace application\core;
 
@@ -41,7 +35,7 @@ class View
 	 * @param array $vars
 	 */
 	public function render($title, $vars = []) {
-		$path = 'application/views/'.$this->path.'.php';
+		$path = 'application/views/forms/'.$this->path.'.php';
 		if (file_exists($path)) {
 			ob_start();
 			include $path;

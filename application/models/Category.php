@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vlad
- * Date: 22.10.2018
- * Time: 21:15
- */
 
-namespace src;
+namespace application\models;
 
 
-class Category
+use application\core\Model;
+
+class Category extends Model
 {
     /**
      * @var $table

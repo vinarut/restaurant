@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vlad
- * Date: 22.10.2018
- * Time: 21:04
- */
 
 namespace application\lib;
 
 
 use PDO;
+use PDOStatement;
 
 class DataBase
 {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vladislav
- * Date: 28.10.2018
- * Time: 21:27
- */
 
 namespace application\core;
 
@@ -22,6 +16,11 @@ abstract class Controller
 	public $view;
 
 	/**
+	 * @var Model
+	 */
+	public $model;
+
+	/**
 	 * Controller constructor.
 	 * @param $route
 	 */
@@ -29,5 +28,30 @@ abstract class Controller
 	{
 		$this->route = $route;
 		$this->view = new View($this->route);
+//		$this->model = $this->loadModel($this->route['controller']);
+//		debug($this->model);
+	}
+
+	/**
+	 * @param $name
+	 * @return null
+	 */
+	public function loadModel($name)
+	{
+		$path = 'application\models\\'.ucfirst($name);
+		if (class_exists($path)) {
+			return new $path;
+		}
+		return null;
+	}
+
+	/**
+	 * @param null $id
+	 * @return array $attributes
+	 */
+	public function getData($id = null)
+	{
+		$this->model->load($id);
+		return $this->model->getAttributes();
 	}
 }

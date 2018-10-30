@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vladislav
- * Date: 27.10.2018
- * Time: 22:20
- */
 
 return [
 
@@ -19,22 +13,22 @@ return [
 	],
 
 	'category' => [
-		'controller' => 'forms',
+		'controller' => 'category',
 		'action' => 'category'
 	],
 
 	'dish' => [
-		'controller' => 'forms',
+		'controller' => 'dish',
 		'action' => 'dish'
 	],
 
 	'dish_ingredients' => [
-		'controller' => 'forms',
+		'controller' => 'dish_ingredients',
 		'action' => 'dish_ingredients'
 	],
 
 	'ingredient' => [
-		'controller' => 'forms',
+		'controller' => 'ingredient',
 		'action' => 'ingredient'
 	],
 
