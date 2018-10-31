@@ -1,20 +1,29 @@
 <div class="container">
-	<div class="row">
-		<form action="" method="post" class="col-lg-12">
-			<div class="form-group">
-				<label class="label" for="inputDish">Блюдо</label>
-				<input type="text" class="form-control" id="inputDish" placeholder="Блюдо"
-					   name="dish">
-				<label class="label" for="inputPrice">Цена</label>
-				<input type="text" class="form-control" id="inputPrice" placeholder="Цена"
-					   name="price">
-				<label class="label" for="inputIdCategory">Категория</label>
-				<input type="text" class="form-control" id="inputIdCategory" placeholder="Id категории"
-					   name="id_category">
-			</div>
-			<div class="btn-group">
-				<input type="submit" class="btn btn-success btn-md col-lg-12" value="Добавить" name="addDish"/>
-			</div>
-		</form>
-	</div>
+	<a class="btn btn-success" href='/dish/create'">Добавить</a>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Photo</th>
+			<th>Id category</th>
+			<th class="text-center">Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($vars as $key => $value): ?>
+			<tr>
+				<?php foreach ($value as $k => $v): ?>
+					<td><?php echo $v ?></td>
+				<?php endforeach; ?>
+				<td class="w-25 text-center">
+					<a class="btn btn-primary" href="/dish/update/<?= $value['id'] ?>">Изменить</a>
+					<a class="btn btn-danger" href="/dish/delete/<?= $value['id'] ?>">Удалить</a>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 </div>

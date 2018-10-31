@@ -1,14 +1,25 @@
 <div class="container">
-	<div class="row">
-		<form action="" method="post" class="col-lg-12">
-			<div class="form-group">
-				<label class="label" for="inputIngredient">Ингредиент</label>
-				<input type="text" class="form-control" id="inputIngredient" placeholder="Ингредиент"
-					   name="ingredient">
-			</div>
-			<div class="btn-group">
-				<input type="submit" class="btn btn-success btn-md col-lg-12" value="Добавить" name="addIngredient"/>
-			</div>
-		</form>
-	</div>
+	<a class="btn btn-success" href='/ingredient/create'">Добавить</a>
+	<table class="table">
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th class="text-center">Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($vars as $key => $value): ?>
+			<tr>
+				<?php foreach ($value as $k => $v): ?>
+					<td><?php echo $v ?></td>
+				<?php endforeach; ?>
+				<td class="w-25 text-center">
+					<a class="btn btn-primary" href="/ingredient/update/<?= $value['id'] ?>">Изменить</a>
+					<a class="btn btn-danger" href="/ingredient/delete/<?= $value['id'] ?>">Удалить</a>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 </div>

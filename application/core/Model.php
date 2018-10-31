@@ -47,14 +47,6 @@ abstract class Model
             $this->load($id);
     }
 
-	/**
-	 * @return array
-	 */
-	public function getAttributes()
-	{
-		return $this->attributes;
-	}
-
     /**
      * @return bool
      */
@@ -106,12 +98,23 @@ abstract class Model
      */
     public function load($id)
     {
-        $sql = "SELECT * FROM ".$this->table/*." WHERE " . $this->primary . "=?"*/;
+        $sql = "SELECT * FROM ".$this->table." WHERE " . $this->primary . "=?";
         $sth = $this->dataBase->prepare($sql);
         $sth->bindParam(1, $id, PDO::PARAM_INT);
         $sth->execute();
         $this->attributes = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
+
+	/**
+	 * @return array $attributes
+	 */
+	public function all()
+	{
+		$sql = "SELECT * FROM ".$this->table." WHERE 1";
+		$sth = $this->dataBase->prepare($sql);
+		$sth->execute();
+		return $sth->fetchAll(PDO::FETCH_ASSOC);
+	}
 
     /**
      *

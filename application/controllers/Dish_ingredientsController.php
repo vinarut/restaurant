@@ -12,6 +12,30 @@ class Dish_ingredientsController extends Controller
 	 */
 	public function dish_ingredientsAction()
 	{
-		$this->view->render('Состав блюд');
+		$this->view->render('Состав блюд', $this->getData());
+	}
+
+	/**
+	 * create action
+	 */
+	public function createAction()
+	{
+		$this->view->render('Добавить состав');
+	}
+
+	/**
+	 * update action
+	 */
+	public function updateAction()
+	{
+		$this->view->render('Обновить состав');
+	}
+
+	/**
+	 * delete action
+	 */
+	public function deleteAction()
+	{
+		$this->view->render('Удалить категорию');
 	}
 }

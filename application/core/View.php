@@ -34,7 +34,8 @@ class View
 	 * @param $title
 	 * @param array $vars
 	 */
-	public function render($title, $vars = []) {
+	public function render($title, $vars = [])
+	{
 		$path = 'application/views/forms/'.$this->path.'.php';
 		if (file_exists($path)) {
 			ob_start();
@@ -49,12 +50,22 @@ class View
 	/**
 	 * @param $code
 	 */
-	public static function errorCode($code) {
+	public static function errorCode($code)
+	{
 		$path = 'application/views/errors/'.$code.'.php';
 		if (file_exists($path)) {
 			http_response_code($code);
 			include $path;
 			exit;
 		}
+	}
+
+	/**
+	 * @param string $url
+	 */
+	public function redirect($url)
+	{
+		header('Location: '.$url);
+		exit;
 	}
 }

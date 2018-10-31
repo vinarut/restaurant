@@ -3,6 +3,8 @@
 namespace application\core;
 
 
+use application\lib\DataBase;
+
 abstract class Controller
 {
 	/**
@@ -40,18 +42,31 @@ abstract class Controller
 	{
 		$path = 'application\models\\'.ucfirst($name);
 		if (class_exists($path)) {
-			return new $path;
+			return new $path(new DataBase());
 		}
 		return null;
 	}
 
 	/**
-	 * @param null $id
-	 * @return array $attributes
+	 * @return array attributes
 	 */
-	public function getData($id = null)
+	public function getData()
 	{
-		$this->model->load($id);
-		return $this->model->getAttributes();
+//		return $this->model->all();
+	}
+
+	public function createAction()
+	{
+		// TODO: override this method
+	}
+
+	public function updateAction()
+	{
+		// TODO: override this method
+	}
+
+	public function deleteAction()
+	{
+		// TODO: override this method
 	}
 }

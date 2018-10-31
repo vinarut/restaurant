@@ -2,8 +2,3 @@ label {
     font-weight: bold;
     font-size: x-large;
 }
-
-.buttons {
-    display: flex;
-    justify-content: flex-start;
-}
