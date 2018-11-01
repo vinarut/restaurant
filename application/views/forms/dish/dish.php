@@ -7,7 +7,6 @@
 			<th>#</th>
 			<th>Name</th>
 			<th>Price</th>
-			<th>Photo</th>
 			<th>Id category</th>
 			<th class="text-center">Actions</th>
 		</tr>

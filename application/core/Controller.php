@@ -30,8 +30,7 @@ abstract class Controller
 	{
 		$this->route = $route;
 		$this->view = new View($this->route);
-//		$this->model = $this->loadModel($this->route['controller']);
-//		debug($this->model);
+		$this->model = $this->loadModel($this->route['controller']);
 	}
 
 	/**
@@ -52,7 +51,7 @@ abstract class Controller
 	 */
 	public function getData()
 	{
-//		return $this->model->all();
+		return $this->model->all();
 	}
 
 	public function createAction()

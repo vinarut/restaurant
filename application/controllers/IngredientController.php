@@ -12,7 +12,7 @@ class IngredientController extends Controller
 	 */
 	public function ingredientAction()
 	{
-		$this->view->render('Ингридиенты');
+		$this->view->render('Ингредиенты', $this->getData());
 	}
 
 	/**
@@ -21,9 +21,6 @@ class IngredientController extends Controller
 	public function createAction()
 	{
 		$this->view->render('Добавить ингредиент');
-		if (isset($_POST['ingredient']) && !empty($_POST['ingredient'])) {
-			$this->model->create();
-		}
 	}
 
 	/**

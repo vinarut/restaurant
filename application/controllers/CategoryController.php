@@ -21,9 +21,6 @@ class CategoryController extends Controller
 	public function createAction()
 	{
 		$this->view->render('Добавить категорию');
-		if (isset($_POST['category']) && !empty($_POST['category'])) {
-			$this->model->create();
-		}
 	}
 
 	/**

@@ -17,8 +17,8 @@ class DataBase
     public function __construct()
     {
     	$config = include 'application/config/config.php';
-        $this->database = new PDO('mysql:host='.$config['host'].';dbname='.$config['name'],
-			$config['user'], $config['pass'], $this->getOptions());
+    	$dsn = 'mysql:host='.$config['host'].';dbname='.$config['name'].';charset='.$config['encoding'];
+        $this->database = new PDO($dsn, $config['user'], $config['pass'], $this->getOptions());
     }
 
 	/**
