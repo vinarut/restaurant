@@ -18,7 +18,7 @@
 					<td><?php echo $v ?></td>
 				<?php endforeach; ?>
 				<td class="w-25 text-center">
-					<a class="btn btn-primary" href="/dish/update/<?= $value['id'] ?>">Изменить</a>
+					<a class="btn btn-link" href="/dish/update/<?= $value['id'] ?>">Изменить</a>
 					<a class="btn btn-danger" href="/dish/delete/<?= $value['id'] ?>">Удалить</a>
 				</td>
 			</tr>

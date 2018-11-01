@@ -1,5 +1,5 @@
 <div class="container">
-	<a class="btn btn-success" href='/ingredient/create'">Добавить</a>
+	<a class="btn btn-success" href='/ingredient/create'>Добавить</a>
 	<table class="table">
 		<thead>
 		<tr>
@@ -15,7 +15,7 @@
 					<td><?php echo $v ?></td>
 				<?php endforeach; ?>
 				<td class="w-25 text-center">
-					<a class="btn btn-primary" href="/ingredient/update/<?= $value['id'] ?>">Изменить</a>
+					<a class="btn btn-link" href="/ingredient/update/<?= $value['id'] ?>">Изменить</a>
 					<a class="btn btn-danger" href="/ingredient/delete/<?= $value['id'] ?>">Удалить</a>
 				</td>
 			</tr>
