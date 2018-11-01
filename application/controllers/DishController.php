@@ -21,6 +21,17 @@ class DishController extends Controller
 	public function createAction()
 	{
 		$this->view->render('Добавить блюдо');
+
+		$boolean = isset($_POST['dish']) && !empty($_POST['dish']) && isset($_POST['price']) && !empty($_POST['price'])
+			&& isset($_POST['id_category']) && !empty($_POST['id_category']);
+
+		if ($boolean) {
+			$this->model->name = $_POST['dish'];
+			$this->model->price = $_POST['price'];
+			$this->model->id_category = $_POST['id_category'];
+			$this->model->create();
+			$this->view->redirect('/dish/create');
+		}
 	}
 
 	/**

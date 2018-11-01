@@ -44,6 +44,14 @@ class DataBase
 		];
 	}
 
+	/**
+	 * @return string
+	 */
+	public function lastInsertId()
+	{
+		return $this->database->lastInsertId();
+	}
+
     /**
      * @param $statement
      * @return bool|PDOStatement

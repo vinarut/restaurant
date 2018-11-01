@@ -58,10 +58,15 @@ abstract class Model
         $i = 1;
         foreach(array_keys($attrs) as $key) {
             $param = isset($this->attributes[$key])? $this->attributes[$key]: null;
-            $sth->bindParam($i, $param, PDO::PARAM_STR);
+            $sth->bindValue($i, $param, PDO::PARAM_STR);
             $i ++;
         }
-        return $sth->execute();
+
+        if($ret = $sth->execute()) {
+			$this->{$this->primary} = $this->dataBase->lastInsertId();
+		}
+
+		return $ret;
     }
 
     /**
@@ -75,7 +80,7 @@ abstract class Model
         $i = 1;
         foreach(array_keys($attrs) as $key) {
             $param = isset($this->attributes[$key])? $this->attributes[$key]: null;
-            $sth->bindParam($i, $param, PDO::PARAM_STR);
+            $sth->bindValue($i, $param, PDO::PARAM_STR);
             $i ++;
         }
         $sth->bindParam($i, $this->attributes[$this->primary], PDO::PARAM_INT);
@@ -124,7 +129,7 @@ abstract class Model
         $sql = "SHOW COLUMNS FROM ".$this->table;
         $result = $this->dataBase->query($sql);
         foreach($result as $row) {
-            $this->metaData[] = $row['Field'];
+            $this->metaData[$row['Field']] = $row;
         }
     }
 
@@ -161,7 +166,7 @@ abstract class Model
     private function queryBuilder()
     {
         $t = [];
-        foreach($this->metaData as $key) {
+        foreach(array_keys($this->metaData) as $key) {
             if($key != $this->primary) {
                 $t[$key] = "$key=?";
             }

@@ -21,6 +21,14 @@ class CategoryController extends Controller
 	public function createAction()
 	{
 		$this->view->render('Добавить категорию');
+
+		$boolean = isset($_POST['category']) && !empty($_POST['category']);
+
+		if ($boolean) {
+			$this->model->name = $_POST['category'];
+			$this->model->create();
+			$this->view->redirect('/category/create');
+		}
 	}
 
 	/**

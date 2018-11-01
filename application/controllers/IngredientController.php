@@ -21,6 +21,14 @@ class IngredientController extends Controller
 	public function createAction()
 	{
 		$this->view->render('Добавить ингредиент');
+
+		$boolean = isset($_POST['ingredient']) && !empty($_POST['ingredient']);
+
+		if ($boolean) {
+			$this->model->name = $_POST['ingredient'];
+			$this->model->create();
+			$this->view->redirect('/ingredient/create');
+		}
 	}
 
 	/**
