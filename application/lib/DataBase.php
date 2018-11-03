@@ -4,6 +4,7 @@ namespace application\lib;
 
 
 use PDO;
+use PDOException;
 use PDOStatement;
 
 class DataBase
@@ -18,7 +19,12 @@ class DataBase
     {
     	$config = include 'application/config/config.php';
     	$dsn = 'mysql:host='.$config['host'].';dbname='.$config['name'].';charset='.$config['encoding'];
-        $this->database = new PDO($dsn, $config['user'], $config['pass'], $this->getOptions());
+
+    	try {
+    		$this->database = new PDO($dsn, $config['user'], $config['pass'], $this->getOptions());
+		} catch (PDOException $exception) {
+    		die('Could not connect to the database');
+		}
     }
 
 	/**
