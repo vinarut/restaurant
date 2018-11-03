@@ -21,10 +21,10 @@ class DataBase
     	$dsn = 'mysql:host='.$config['host'].';dbname='.$config['name'].';charset='.$config['encoding'];
 
     	try {
-    		$this->database = new PDO($dsn, $config['user'], $config['pass'], $this->getOptions());
-		} catch (PDOException $exception) {
-    		die('Could not connect to the database');
-		}
+    	    $this->database = new PDO($dsn, $config['user'], $config['pass'], $this->getOptions());
+    	} catch (PDOException $exception) {
+    	    die('Could not connect to the database');
+    	}
     }
 
 	/**
@@ -43,11 +43,11 @@ class DataBase
 	 * @return array
 	 */
 	private function getOptions() {
-    	return [
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_CASE => PDO::CASE_NATURAL,
-			PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING
-		];
+	    return [
+    	    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_CASE => PDO::CASE_NATURAL,
+            PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING
+        ];
 	}
 
 	/**

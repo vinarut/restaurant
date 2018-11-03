@@ -16,8 +16,10 @@
 					<td><?php echo $v ?></td>
 				<?php endforeach; ?>
 				<td class="w-25 text-center">
-					<a class="btn btn-link" href="/dish_ingredients/update/<?= $value['id'] ?>">Изменить</a>
-					<a class="btn btn-danger" href="/dish_ingredients/delete/<?= $value['id'] ?>">Удалить</a>
+					<a class="btn btn-link" href="/dish_ingredients/update/<?= $value['id_dish'].';'
+					.$value['id_ingredient'] ?>">Изменить</a>
+					<a class="btn btn-danger" href="/dish_ingredients/delete/<?= $value['id_dish'].';'
+					.$value['id_ingredient'] ?>">Удалить</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
