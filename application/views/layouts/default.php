@@ -12,21 +12,21 @@
 	<title><?php echo $title; ?></title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md bg-light justify-content-center">
-		<ul class="navbar-nav">
-			<li class="nav-item">
+	<nav class="navbar navbar-expand-sm bg-light justify-content-center">
+		<ul class="navbar-nav d-flex bd-highlight">
+			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/index">Главная</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/category">Категории</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/dish">Блюда</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/dish_ingredients">Состав</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/ingredient">Ингредиент</a>
 			</li>
 		</ul>
