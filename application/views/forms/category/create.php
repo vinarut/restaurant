@@ -1,7 +1,7 @@
 <div class="container">
 	<form action="/category/create" method="post">
 		<div class="form-group">
-		  	<label class="label" for="idCategory">Категория</label>
+		  	<label class="label font-weight-bold mt-2" for="idCategory">Категория</label>
 			<input type="text" class="form-control" id="idCategory" placeholder="Категория"
 				   name="category" autocomplete="off">
 		</div>

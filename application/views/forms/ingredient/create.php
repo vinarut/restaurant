@@ -1,7 +1,7 @@
 <div class="container">
 	<form action="/ingredient/create" method="post">
 		<div class="form-group">
-			<label for="ingredient" class="label">Ингредиент</label>
+			<label class="label font-weight-bold mt-2" for="ingredient">Ингредиент</label>
 			<input type="text" class="form-control" id="ingredient" placeholder="Название ингредиента"
 			       name="ingredient" autocomplete="off">
 		</div>

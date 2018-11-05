@@ -1,5 +1,5 @@
 <div class="container">
-	<a class="btn btn-success" href='/ingredient/create'>Добавить</a>
+	<a class="btn btn-success m-1" href='/ingredient/create'>Добавить</a>
 	<table class="table">
 		<thead>
 		<tr>
