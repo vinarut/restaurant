@@ -63,7 +63,10 @@ abstract class Model
         }
 
         if($ret = $sth->execute()) {
-			$this->{$this->primary} = $this->dataBase->lastInsertId();
+            $lastId = $this->dataBase->lastInsertId();
+            if ($lastId) {
+                $this->{$this->primary} = $lastId;
+            }
 		}
 
 		return $ret;

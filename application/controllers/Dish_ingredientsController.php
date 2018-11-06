@@ -30,7 +30,7 @@ class Dish_ingredientsController extends Controller
 			$this->model->id_ingredient = $_POST['id_ingredient'];
 			$this->model->weight = $_POST['weight'];
 			$this->model->create();
-			$this->view->redirect('/dish_ingredient/create');
+			$this->view->redirect('/dish_ingredients/create');
 		}
 	}
 
