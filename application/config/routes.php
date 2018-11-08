@@ -14,7 +14,7 @@ return [
 
 	'category' => [
 		'controller' => 'category',
-		'action' => 'category'
+		'action' => 'index'
 	],
 
 	'category/create' => [
@@ -34,7 +34,7 @@ return [
 
 	'dish' => [
 		'controller' => 'dish',
-		'action' => 'dish'
+		'action' => 'index'
 	],
 
 	'dish/create' => [
@@ -52,29 +52,29 @@ return [
 		'action' => 'delete'
 	],
 
-	'dish_ingredients' => [
-		'controller' => 'dish_ingredients',
-		'action' => 'dish_ingredients'
+	'dishIngredients' => [
+		'controller' => 'dishIngredients',
+		'action' => 'index'
 	],
 
-	'dish_ingredients/create' => [
-		'controller' => 'dish_ingredients',
+	'dishIngredients/create' => [
+		'controller' => 'dishIngredients',
 		'action' => 'create'
 	],
 
-	'dish_ingredients/update' => [
-		'controller' => 'dish_ingredients',
+	'dishIngredients/update' => [
+		'controller' => 'dishIngredients',
 		'action' => 'update'
 	],
 
-	'dish_ingredients/delete' => [
-		'controller' => 'dish_ingredients',
+	'dishIngredients/delete' => [
+		'controller' => 'dishIngredients',
 		'action' => 'delete'
 	],
 
 	'ingredient' => [
 		'controller' => 'ingredient',
-		'action' => 'ingredient'
+		'action' => 'index'
 	],
 
 	'ingredient/create' => [

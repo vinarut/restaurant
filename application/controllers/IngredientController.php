@@ -8,11 +8,11 @@ use application\core\Controller;
 class IngredientController extends Controller
 {
 	/**
-	 * ingredient action
+	 * index action
 	 */
-	public function ingredientAction()
+	public function indexAction()
 	{
-		$this->view->render('Ингредиенты', $this->getData());
+		$this->view->render('Ингредиенты', $this->getData(lcfirst($this->route['controller'])));
 	}
 
 	/**

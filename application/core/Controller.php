@@ -46,26 +46,12 @@ abstract class Controller
 		return null;
 	}
 
-	/**
-	 * @return array attributes
-	 */
-	public function getData()
+    /**
+     * @param string $table
+     * @return array attributes
+     */
+	public function getData($table)
 	{
-		return $this->model->all();
-	}
-
-	public function createAction()
-	{
-		// TODO: override this method
-	}
-
-	public function updateAction()
-	{
-		// TODO: override this method
-	}
-
-	public function deleteAction()
-	{
-		// TODO: override this method
+		return $this->model->all($table);
 	}
 }

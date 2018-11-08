@@ -23,7 +23,7 @@
 				<a class="nav-link" href="/dish">Блюда</a>
 			</li>
 			<li class="nav-item p-2 flex-fill bd-highlight">
-				<a class="nav-link" href="/dish_ingredients">Состав</a>
+				<a class="nav-link" href="/dishIngredients">Состав</a>
 			</li>
 			<li class="nav-item p-2 flex-fill bd-highlight">
 				<a class="nav-link" href="/ingredient">Ингредиент</a>

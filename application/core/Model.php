@@ -113,12 +113,13 @@ abstract class Model
         $this->attributes = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-	/**
-	 * @return array $attributes
-	 */
-	public function all()
+    /**
+     * @param string $table
+     * @return array $attributes
+     */
+	public function all($table)
 	{
-		$sql = "SELECT * FROM ".$this->table." WHERE 1";
+		$sql = "SELECT * FROM ".$table." WHERE 1";
 		$sth = $this->dataBase->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);

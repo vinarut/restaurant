@@ -8,11 +8,11 @@ use application\core\Controller;
 class DishController extends Controller
 {
 	/**
-	 * dish action
+	 * index action
 	 */
-	public function dishAction()
+	public function indexAction()
 	{
-		$this->view->render('Блюда',$this->getData());
+		$this->view->render('Блюда', $this->getData(lcfirst($this->route['controller'])));
 	}
 
 	/**
@@ -20,7 +20,7 @@ class DishController extends Controller
 	 */
 	public function createAction()
 	{
-		$this->view->render('Добавить блюдо');
+		$this->view->render('Добавить блюдо', $this->getData('category'));
 
 		$boolean = isset($_POST['dish']) && !empty($_POST['dish']) && isset($_POST['price']) && !empty($_POST['price'])
 			&& isset($_POST['id_category']) && !empty($_POST['id_category']);

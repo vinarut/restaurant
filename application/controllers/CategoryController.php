@@ -8,11 +8,11 @@ use application\core\Controller;
 class CategoryController extends Controller
 {
 	/**
-	 * category action
+	 * index action
 	 */
-	public function categoryAction()
+	public function indexAction()
 	{
-		$this->view->render('Категории', $this->getData());
+		$this->view->render('Категории', $this->getData(lcfirst($this->route['controller'])));
 	}
 
 	/**
