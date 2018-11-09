@@ -65,11 +65,25 @@ abstract class Model
         if($ret = $sth->execute()) {
             $lastId = $this->dataBase->lastInsertId();
             if ($lastId) {
-                $this->{$this->primary} = $lastId;
+                array_push($this->primary, $lastId);
             }
 		}
 
 		return $ret;
+    }
+
+    /**
+     * @return string
+     */
+    private function preparePrimaryCondition()
+    {
+        if(!is_array($this->primary))
+            $this->primary = [$this->primary];
+        $tmp = [];
+        foreach ($this->primary as $key) {
+            array_push($tmp, $key.'=?');
+        }
+        return implode(" AND ", $tmp);
     }
 
     /**
@@ -78,7 +92,8 @@ abstract class Model
     public function update()
     {
         $attrs = $this->queryBuilder();
-        $sql = "UPDATE ".$this->table." SET " . implode(", ", $attrs) . " WHERE " . $this->primary . "=?";
+        $sql = "UPDATE ".$this->table." SET " . implode(", ", $attrs) . " WHERE ". $this->preparePrimaryCondition();
+
         $sth = $this->dataBase->prepare($sql);
         $i = 1;
         foreach(array_keys($attrs) as $key) {
@@ -86,7 +101,10 @@ abstract class Model
             $sth->bindValue($i, $param, PDO::PARAM_STR);
             $i ++;
         }
-        $sth->bindParam($i, $this->attributes[$this->primary], PDO::PARAM_INT);
+        foreach($this->primary as $key) {
+            $sth->bindParam($i, $this->attributes[$key], PDO::PARAM_INT);
+            $i ++;
+        }
         return $sth->execute();
     }
 
@@ -95,9 +113,13 @@ abstract class Model
      */
     public function delete()
     {
-        $sql = "DELETE FROM ".$this->table." WHERE " . $this->primary . "=?";
+        $sql = "DELETE FROM ".$this->table." WHERE ". $this->preparePrimaryCondition();
         $sth = $this->dataBase->prepare($sql);
-        $sth->bindParam(1, $this->attributes[$this->primary], PDO::PARAM_INT);
+        $i = 1;
+        foreach($this->primary as $key) {
+            $sth->bindParam($i, $this->attributes[$key], PDO::PARAM_INT);
+            $i ++;
+        }
         return $sth->execute();
     }
 
@@ -110,7 +132,7 @@ abstract class Model
         $sth = $this->dataBase->prepare($sql);
         $sth->bindParam(1, $id, PDO::PARAM_INT);
         $sth->execute();
-        $this->attributes = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $this->attributes = $sth->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -171,7 +193,11 @@ abstract class Model
     {
         $t = [];
         foreach(array_keys($this->metaData) as $key) {
-            if($key != $this->primary) {
+            if(!is_array($this->primary)) {
+                $this->primary = [$this->primary];
+            }
+
+            if(!in_array($key, $this->primary)) {
                 $t[$key] = "$key=?";
             }
         }

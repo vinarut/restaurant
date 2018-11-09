@@ -8,12 +8,12 @@ use application\core\Model;
 class Category extends Model
 {
     /**
-     * @var $table
+     * @var string $table
      */
     protected $table = 'category';
 
     /**
-     * @var $primary
+     * @var string $primary
      */
     protected $primary = 'id';
 }
