@@ -27,7 +27,7 @@ class IngredientController extends Controller
 		if ($boolean) {
 			$this->model->name = $_POST['ingredient'];
 			$this->model->create();
-			$this->view->redirect('/ingredient/create');
+			$this->view->redirect('/ingredient');
 		}
 	}
 
@@ -36,7 +36,19 @@ class IngredientController extends Controller
 	 */
 	public function updateAction()
 	{
-		$this->view->render('Обновить ингредиент');
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+
+        $id = $result['0']['0'];
+        $this->view->render('Обновить ингредиент', ['id' => $id]);
+
+        $boolean = isset($_POST['ingredient']) && !empty($_POST['ingredient']);
+
+        if ($boolean) {
+            $this->model->id = $id;
+            $this->model->name = $_POST['ingredient'];
+            $this->model->update();
+            $this->view->redirect('/ingredient');
+        }
 	}
 
 	/**

@@ -27,7 +27,7 @@ class CategoryController extends Controller
 		if ($boolean) {
 			$this->model->name = $_POST['category'];
 			$this->model->create();
-			$this->view->redirect('/category/create');
+			$this->view->redirect('/category');
 		}
 	}
 
@@ -36,7 +36,19 @@ class CategoryController extends Controller
 	 */
 	public function updateAction()
 	{
-		$this->view->render('Обновить категорию');
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+
+        $id = $result['0']['0'];
+        $this->view->render('Обновить категорию', ['id' => $id]);
+
+        $boolean = isset($_POST['category']) && !empty($_POST['category']);
+
+        if ($boolean) {
+            $this->model->id = $id;
+            $this->model->name = $_POST['category'];
+            $this->model->update();
+            $this->view->redirect('/category');
+        }
 	}
 
 	/**

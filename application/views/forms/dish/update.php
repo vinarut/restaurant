@@ -10,10 +10,10 @@
                 <?php foreach ($vars['categories'] as $value): ?>
                     <?php foreach ($value as $k => $v): ?>
                         <?php if ($k == 'id'): ?>
-                            <option value=<?=$value['id'];?>>
+                            <option value="<?=$value['id'];?>">
                                 <?php echo $value['name']; ?>
                             </option>
-                            <?php break; endif; ?>
+                        <?php break; endif; ?>
                     <?php endforeach; ?>
                 <?php endforeach; ?>
             </select>

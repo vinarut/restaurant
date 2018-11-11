@@ -4,6 +4,8 @@ namespace application\controllers;
 
 
 use application\core\Controller;
+use application\lib\DataBase;
+use PDO;
 
 class DishController extends Controller
 {
@@ -12,7 +14,10 @@ class DishController extends Controller
 	 */
 	public function indexAction()
 	{
-		$this->view->render('Блюда', $this->getData(lcfirst($this->route['controller'])));
+        $sql = "SELECT `d`.`id`, `d`.`name` as `d_name`, `d`.`price` as `price`, `c`.`name` FROM `dish` as `d` 
+				JOIN `category` as `c` ON `d`.`id_category` = `c`.`id`";
+        $ret = DataBase::singleton()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $this->view->render('Блюда', $ret);
 	}
 
 	/**
@@ -30,7 +35,7 @@ class DishController extends Controller
 			$this->model->price = $_POST['price'];
 			$this->model->id_category = $_POST['id_category'];
 			$this->model->create();
-			$this->view->redirect('/dish/create');
+			$this->view->redirect('/dish');
 		}
 	}
 
@@ -39,7 +44,22 @@ class DishController extends Controller
 	 */
 	public function updateAction()
 	{
-		$this->view->render('Обновить блюдо');
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+
+        $id = $result['0']['0'];
+        $this->view->render('Обновить категорию', ['id' => $id, 'categories' => $this->getData('category')]);
+
+        $boolean = isset($_POST['dish']) && !empty($_POST['dish']) && isset($_POST['price']) && !empty($_POST['price'])
+            && isset($_POST['id_category']) && !empty($_POST['id_category']);
+
+        if ($boolean) {
+            $this->model->id = $id;
+            $this->model->name = $_POST['dish'];
+            $this->model->price = $_POST['price'];
+            $this->model->id_category = $_POST['id_category'];
+            $this->model->update();
+            $this->view->redirect('/dish');
+        }
 	}
 
 	/**
