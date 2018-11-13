@@ -13,7 +13,7 @@
                     <?php endforeach; ?>
                 <?php endforeach; ?>
             </select>
-            <label class="label font-weight-bold mt-2" for="selectIdIngredient">Изменить ингридиент</label>
+            <label class="label font-weight-bold mt-2" for="selectIdIngredient">Изменить ингредиент</label>
             <select class="form-control" id="selectIdIngredient" name="id_ingredient">
                 <?php foreach ($vars['ingredients'] as $value): ?>
                     <?php foreach ($value as $k => $v): ?>

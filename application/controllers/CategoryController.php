@@ -4,6 +4,8 @@ namespace application\controllers;
 
 
 use application\core\Controller;
+use application\lib\DataBase;
+use PDO;
 
 class CategoryController extends Controller
 {
@@ -12,7 +14,9 @@ class CategoryController extends Controller
 	 */
 	public function indexAction()
 	{
-		$this->view->render('Категории', $this->getData(lcfirst($this->route['controller'])));
+        $sql = "SELECT * FROM `category`";
+        $ret = DataBase::singleton()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $this->view->render('Категории', $ret);
 	}
 
 	/**
@@ -39,7 +43,9 @@ class CategoryController extends Controller
         preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
 
         $id = $result['0']['0'];
-        $this->view->render('Обновить категорию', ['id' => $id]);
+        $sql = "SELECT `name` FROM `category` WHERE `id`='$id'";
+        $ret = DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+        $this->view->render('Обновить категорию', ['id' => $id, 'category' => $ret['name']]);
 
         $boolean = isset($_POST['category']) && !empty($_POST['category']);
 
@@ -56,6 +62,21 @@ class CategoryController extends Controller
 	 */
 	public function deleteAction()
 	{
-		$this->view->render('Удалить категорию');
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+
+        $id = $result['0']['0'];
+
+        $sql = "SELECT `name` FROM `category` WHERE `id`='$id'";
+        $ret = DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+
+        $this->view->render('Удалить категорию', ['id' => $id, 'name' => $ret['name']]);
+
+        $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
+
+        if ($boolean) {
+            $this->model->id = $id;
+            $this->model->delete();
+            $this->view->redirect('/category');
+        }
 	}
 }

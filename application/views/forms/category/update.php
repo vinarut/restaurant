@@ -3,7 +3,7 @@
         <div class="form-group">
             <label class="label font-weight-bold mt-2" for="idCategory">Новое название категории</label>
             <input type="text" class="form-control" id="idCategory" placeholder="Категория"
-                   name="category" autocomplete="off">
+                   name="category" autocomplete="off" value="<?=$vars['category']?>">
         </div>
         <div class="btn-group">
             <input type="submit" class="btn btn-success" value="Изменить" />
