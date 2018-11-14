@@ -48,18 +48,40 @@ abstract class Model
     }
 
     /**
+     * @return string
+     */
+    private function prepareCompositePrimary()
+    {
+        $tmp = [];
+        foreach ($this->primary as $key) {
+            array_push($tmp, $key.'=?');
+        }
+        return implode(', ', $tmp);
+    }
+
+    /**
      * @return bool
      */
     public function create()
     {
         $attrs = $this->queryBuilder();
-        $sql = "INSERT INTO ".$this->table." SET " . implode(", ", $attrs);
+        $sql = '';
+        if (count($this->primary) > 1)
+            $sql = "INSERT INTO ".$this->table." SET " . implode(", ", $attrs).", ".$this->prepareCompositePrimary();
+        else
+            $sql = "INSERT INTO ".$this->table." SET " . implode(", ", $attrs);
         $sth = $this->dataBase->prepare($sql);
         $i = 1;
         foreach(array_keys($attrs) as $key) {
             $param = isset($this->attributes[$key])? $this->attributes[$key]: null;
             $sth->bindValue($i, $param, PDO::PARAM_STR);
             $i ++;
+        }
+        if (count($this->primary) > 1) {
+            foreach($this->primary as $key) {
+                $sth->bindParam($i, $this->attributes[$key], PDO::PARAM_INT);
+                $i ++;
+            }
         }
 
         if($ret = $sth->execute()) {
@@ -136,12 +158,11 @@ abstract class Model
     }
 
     /**
-     * @param string $table
      * @return array $attributes
      */
-	public function all($table)
+	public function all()
 	{
-		$sql = "SELECT * FROM ".$table." WHERE 1";
+		$sql = "SELECT * FROM ".$this->table." WHERE 1";
 		$sth = $this->dataBase->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
