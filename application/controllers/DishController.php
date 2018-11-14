@@ -65,18 +65,9 @@ class DishController extends Controller
 	 */
 	public function deleteAction()
 	{
-        $id = $this->matches();
-
-        $sql = "SELECT `name` FROM `dish` WHERE `id`='$id'";
-        $ret = $this->fetch($sql);
-
-        $this->view->render('Удалить категорию', ['id' => $id, 'dish' => $ret['name']]);
-
-        if ($this->issetNotEmpty()) {
-            $this->model->id = $id;
-            $this->model->delete();
-            $this->view->redirect('/dish');
-        }
+        $this->model->id = $this->matches();
+        $this->model->delete();
+        $this->view->redirect('/dish');
 	}
 
     /**

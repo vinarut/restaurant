@@ -20,10 +20,26 @@
                 <?php endforeach; ?>
                 <td class="w-25">
                     <a class="btn btn-link" href="/category/update/<?= $value['id'] ?>">Изменить</a>
-                    <a class="btn btn-danger" href="/category/delete/<?= $value['id'] ?>">Удалить</a>
+                    <a type="button" id="<?= $value['name'] ?>" class="btn btn-danger delete-button"
+                       href="/category/delete/<?= $value['id'] ?>" >
+                        Удалить
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".delete-button").on('click', function() {
+            let url = $(this).attr('href');
+            let value = $(this).attr('id');
+            if(confirm(`Вы уверены, что хотите удалить категорию "${value}"?`)) {
+                window.location = url;
+            }
+            return false;
+        })
+    });
+</script>

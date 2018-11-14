@@ -54,18 +54,9 @@ class CategoryController extends Controller
 	 */
 	public function deleteAction()
 	{
-        $id = $this->matches();
-
-        $sql = "SELECT `name` FROM `category` WHERE `id`='$id'";
-        $ret = $this->fetch($sql);
-
-        $this->view->render('Удалить категорию', ['id' => $id, 'category' => $ret['name']]);
-
-        if ($this->issetNotEmpty()) {
-            $this->model->id = $id;
-            $this->model->delete();
-            $this->view->redirect('/category');
-        }
+        $this->model->id = $this->matches();
+        $this->model->delete();
+        $this->view->redirect('/category');
 	}
 
     /**

@@ -54,18 +54,9 @@ class IngredientController extends Controller
 	 */
 	public function deleteAction()
 	{
-        $id = $this->matches();
-
-        $sql = "SELECT `name` FROM `ingredient` WHERE `id`='$id'";
-        $ret = $this->fetch($sql);
-
-        $this->view->render('Удалить ингредиент', ['id' => $id, 'ingredient' => $ret['name']]);
-
-        if ($this->issetNotEmpty()) {
-            $this->model->id = $id;
-            $this->model->delete();
-            $this->view->redirect('/ingredient');
-        }
+        $this->model->id = $this->matches();
+        $this->model->delete();
+        $this->view->redirect('/ingredient');
 	}
 
     /**

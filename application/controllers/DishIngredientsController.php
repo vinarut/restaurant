@@ -65,22 +65,11 @@ class DishIngredientsController extends Controller
 	 */
 	public function deleteAction()
 	{
-        $id = explode(':', $this->matches());
-
-        $sql = "SELECT `name` FROM `dish` WHERE `id`='$id[0]'";
-        $dish = $this->fetch($sql);
-        $sql = "SELECT `name` FROM `ingredient` WHERE `id`='$id[1]'";
-        $ingredient = $this->fetch($sql);
-
-        $this->view->render('Удалить состав', ['id' => $this->matches(), 'dish' => $dish['name'],
-            'ingredient' => $ingredient['name']]);
-
-        if ($this->issetNotEmpty()) {
-            $this->model->id_dish = $id[0];
-            $this->model->id_ingredient = $id[1];
-            $this->model->delete();
-            $this->view->redirect('/dishIngredients');
-        }
+	    $id = explode(':', $this->matches());
+        $this->model->id_dish = $id[0];
+        $this->model->id_ingredient = $id[1];
+        $this->model->delete();
+        $this->view->redirect('/dishIngredients');
 	}
 
     /**

@@ -20,11 +20,26 @@
                 <td class="w-25">
                     <a class="btn btn-link" href="/dishIngredients/update/<?= $value['id_dish'].':'.
                     $value['id_ingredient'] ?>">Изменить</a>
-                    <a class="btn btn-danger" href="/dishIngredients/delete/<?= $value['id_dish'].':'.
-                    $value['id_ingredient'] ?>">Удалить</a>
+                    <a type="button" class="btn btn-danger delete-button" id="<?=$value['d_name'].'_'.$value['i_name']?>"
+                       href="/dishIngredients/delete/<?= $value['id_dish'].':'.$value['id_ingredient'] ?>">
+                        Удалить
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".delete-button").on('click', function() {
+            let url = $(this).attr('href');
+            let value = $(this).attr('id').split('_');
+            if(confirm(`Вы уверены, что хотите удалить игредиент "${value[1]}" для блюда "${value[0]}"?`)) {
+                window.location = url;
+            }
+            return false;
+        })
+    });
+</script>
