@@ -2,18 +2,20 @@
     <form action="/dish/update/<?=$vars['id']?>" method="post">
         <div class="form-group">
             <label class="label font-weight-bold mt-2" for="inputDish">Новое название блюда</label>
-            <input type="text" class="form-control" id="inputDish" placeholder="Блюдо" autocomplete="off" name="dish" >
+            <input type="text" class="form-control" id="inputDish" placeholder="Блюдо" autocomplete="off" name="dish"
+                   value="<?=$vars['dish']['name']?>">
             <label class="label font-weight-bold mt-2" for="inputPrice">Новая цена</label>
-            <input type="text" class="form-control" id="inputPrice" placeholder="Цена" name="price" autocomplete="off">
+            <input type="text" class="form-control" id="inputPrice" placeholder="Цена" name="price" autocomplete="off"
+                   value="<?=$vars['dish']['price']?>">
             <label class="label font-weight-bold mt-2" for="selectIdCategory">Новая категория</label>
             <select class="form-control" id="selectIdCategory" name="id_category">
                 <?php foreach ($vars['categories'] as $value): ?>
                     <?php foreach ($value as $k => $v): ?>
                         <?php if ($k == 'id'): ?>
-                            <option value="<?=$value['id'];?>">
+                            <option value=<?=$value['id'];?>>
                                 <?php echo $value['name']; ?>
                             </option>
-                        <?php break; endif; ?>
+                            <?php break; endif; ?>
                     <?php endforeach; ?>
                 <?php endforeach; ?>
             </select>

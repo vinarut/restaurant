@@ -9,10 +9,14 @@
         </tr>
         </thead>
         <tbody>
+        <?php $i = 1; ?>
         <?php foreach ($vars as $value): ?>
             <tr>
                 <?php foreach ($value as $k => $v): ?>
-                    <td><?php echo $v ?></td>
+                    <?php if ($k == 'name'): ?>
+                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $v ?></td>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <td class="w-25">
                     <a class="btn btn-link" href="/category/update/<?= $value['id'] ?>">Изменить</a>

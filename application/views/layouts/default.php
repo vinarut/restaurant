@@ -26,7 +26,7 @@
 				<a class="nav-link" href="/dishIngredients">Состав</a>
 			</li>
 			<li class="nav-item p-2 flex-fill bd-highlight">
-				<a class="nav-link" href="/ingredient">Ингредиент</a>
+				<a class="nav-link" href="/ingredient">Ингредиенты</a>
 			</li>
 		</ul>
 	</nav>
