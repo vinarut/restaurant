@@ -4,6 +4,8 @@ namespace application\controllers;
 
 
 use application\core\Controller;
+use application\lib\DataBase;
+use PDO;
 
 class IngredientController extends Controller
 {
@@ -12,7 +14,7 @@ class IngredientController extends Controller
 	 */
 	public function indexAction()
 	{
-		$this->view->render('Ингредиенты', $this->getData(lcfirst($this->route['controller'])));
+		$this->view->render('Ингредиенты', $this->model->all());
 	}
 
 	/**
@@ -36,10 +38,12 @@ class IngredientController extends Controller
 	 */
 	public function updateAction()
 	{
-        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+        $id = $this->matches();
 
-        $id = $result['0']['0'];
-        $this->view->render('Обновить ингредиент', ['id' => $id]);
+        $sql = "SELECT `name` FROM `ingredient` WHERE `id`='$id'";
+        $ret = $this->fetch($sql);
+
+        $this->view->render('Обновить ингредиент', ['id' => $id, 'ingredient' => $ret['name']]);
 
         $boolean = isset($_POST['ingredient']) && !empty($_POST['ingredient']);
 
@@ -56,6 +60,37 @@ class IngredientController extends Controller
 	 */
 	public function deleteAction()
 	{
-		$this->view->render('Удалить ингредиент');
+        $id = $this->matches();
+
+        $sql = "SELECT `name` FROM `ingredient` WHERE `id`='$id'";
+        $ret = $this->fetch($sql);
+
+        $this->view->render('Удалить ингредиент', ['id' => $id, 'ingredient' => $ret['name']]);
+
+        $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
+
+        if ($boolean) {
+            $this->model->id = $id;
+            $this->model->delete();
+            $this->view->redirect('/ingredient');
+        }
 	}
+
+    /**
+     * @return mixed
+     */
+    private function matches()
+    {
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+        return $result['0']['0'];
+    }
+
+    /**
+     * @param $sql
+     * @return mixed
+     */
+    private function fetch($sql)
+    {
+        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+    }
 }

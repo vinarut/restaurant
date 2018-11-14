@@ -45,13 +45,4 @@ abstract class Controller
 		}
 		return null;
 	}
-
-    /**
-     * @param string $table
-     * @return array attributes
-     */
-	public function getData($table)
-	{
-		return $this->model->all($table);
-	}
 }

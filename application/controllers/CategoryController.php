@@ -14,9 +14,7 @@ class CategoryController extends Controller
 	 */
 	public function indexAction()
 	{
-        $sql = "SELECT * FROM `category`";
-        $ret = DataBase::singleton()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        $this->view->render('Категории', $ret);
+        $this->view->render('Категории', $this->model->all());
 	}
 
 	/**
@@ -40,11 +38,11 @@ class CategoryController extends Controller
 	 */
 	public function updateAction()
 	{
-        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+        $id = $this->matches();
 
-        $id = $result['0']['0'];
         $sql = "SELECT `name` FROM `category` WHERE `id`='$id'";
-        $ret = DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+        $ret = $this->fetch($sql);
+
         $this->view->render('Обновить категорию', ['id' => $id, 'category' => $ret['name']]);
 
         $boolean = isset($_POST['category']) && !empty($_POST['category']);
@@ -62,14 +60,12 @@ class CategoryController extends Controller
 	 */
 	public function deleteAction()
 	{
-        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
-
-        $id = $result['0']['0'];
+        $id = $this->matches();
 
         $sql = "SELECT `name` FROM `category` WHERE `id`='$id'";
-        $ret = DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+        $ret = $this->fetch($sql);
 
-        $this->view->render('Удалить категорию', ['id' => $id, 'name' => $ret['name']]);
+        $this->view->render('Удалить категорию', ['id' => $id, 'category' => $ret['name']]);
 
         $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
 
@@ -79,4 +75,22 @@ class CategoryController extends Controller
             $this->view->redirect('/category');
         }
 	}
+
+    /**
+     * @return mixed
+     */
+    private function matches()
+    {
+        preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
+        return $result['0']['0'];
+    }
+
+    /**
+     * @param $sql
+     * @return mixed
+     */
+    private function fetch($sql)
+    {
+        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+    }
 }
