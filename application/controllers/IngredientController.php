@@ -4,8 +4,6 @@ namespace application\controllers;
 
 
 use application\core\Controller;
-use application\lib\DataBase;
-use PDO;
 
 class IngredientController extends Controller
 {
@@ -24,9 +22,7 @@ class IngredientController extends Controller
 	{
 		$this->view->render('Добавить ингредиент');
 
-		$boolean = isset($_POST['ingredient']) && !empty($_POST['ingredient']);
-
-		if ($boolean) {
+		if ($this->issetNotEmpty()) {
 			$this->model->name = $_POST['ingredient'];
 			$this->model->create();
 			$this->view->redirect('/ingredient');
@@ -45,9 +41,7 @@ class IngredientController extends Controller
 
         $this->view->render('Обновить ингредиент', ['id' => $id, 'ingredient' => $ret['name']]);
 
-        $boolean = isset($_POST['ingredient']) && !empty($_POST['ingredient']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id = $id;
             $this->model->name = $_POST['ingredient'];
             $this->model->update();
@@ -67,9 +61,7 @@ class IngredientController extends Controller
 
         $this->view->render('Удалить ингредиент', ['id' => $id, 'ingredient' => $ret['name']]);
 
-        $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id = $id;
             $this->model->delete();
             $this->view->redirect('/ingredient');
@@ -83,14 +75,5 @@ class IngredientController extends Controller
     {
         preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
         return $result['0']['0'];
-    }
-
-    /**
-     * @param $sql
-     * @return mixed
-     */
-    private function fetch($sql)
-    {
-        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
     }
 }

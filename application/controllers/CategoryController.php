@@ -4,8 +4,6 @@ namespace application\controllers;
 
 
 use application\core\Controller;
-use application\lib\DataBase;
-use PDO;
 
 class CategoryController extends Controller
 {
@@ -24,9 +22,7 @@ class CategoryController extends Controller
 	{
 		$this->view->render('Добавить категорию');
 
-		$boolean = isset($_POST['category']) && !empty($_POST['category']);
-
-		if ($boolean) {
+		if ($this->issetNotEmpty()) {
 			$this->model->name = $_POST['category'];
 			$this->model->create();
 			$this->view->redirect('/category');
@@ -45,9 +41,7 @@ class CategoryController extends Controller
 
         $this->view->render('Обновить категорию', ['id' => $id, 'category' => $ret['name']]);
 
-        $boolean = isset($_POST['category']) && !empty($_POST['category']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id = $id;
             $this->model->name = $_POST['category'];
             $this->model->update();
@@ -67,9 +61,7 @@ class CategoryController extends Controller
 
         $this->view->render('Удалить категорию', ['id' => $id, 'category' => $ret['name']]);
 
-        $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id = $id;
             $this->model->delete();
             $this->view->redirect('/category');
@@ -83,14 +75,5 @@ class CategoryController extends Controller
     {
         preg_match_all('!\d+$!', $_SERVER['REQUEST_URI'], $result);
         return $result['0']['0'];
-    }
-
-    /**
-     * @param $sql
-     * @return mixed
-     */
-    private function fetch($sql)
-    {
-        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
     }
 }

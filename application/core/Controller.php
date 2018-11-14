@@ -4,23 +4,24 @@ namespace application\core;
 
 
 use application\lib\DataBase;
+use PDO;
 
 abstract class Controller
 {
 	/**
 	 * @var string
 	 */
-	public $route;
+	private $route;
 
 	/**
 	 * @var View
 	 */
-	public $view;
+	protected $view;
 
 	/**
 	 * @var Model
 	 */
-	public $model;
+	protected $model;
 
 	/**
 	 * Controller constructor.
@@ -37,7 +38,7 @@ abstract class Controller
 	 * @param $name
 	 * @return null
 	 */
-	public function loadModel($name)
+	private function loadModel($name)
 	{
 		$path = 'application\models\\'.ucfirst($name);
 		if (class_exists($path)) {
@@ -45,4 +46,38 @@ abstract class Controller
 		}
 		return null;
 	}
+
+    /**
+     * @return boolean
+     */
+    protected function issetNotEmpty()
+    {
+        if (empty($_POST))
+            return false;
+
+        foreach ($_POST as $key => $value) {
+            $boolean = isset($value) && !empty($value);
+            if (!$boolean)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param $sql
+     * @return mixed
+     */
+    protected function fetch($sql)
+    {
+        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $sql
+     * @return array
+     */
+    protected function fetchAll($sql)
+    {
+        return DataBase::singleton()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

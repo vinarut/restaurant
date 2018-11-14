@@ -4,8 +4,6 @@ namespace application\controllers;
 
 
 use application\core\Controller;
-use application\lib\DataBase;
-use PDO;
 
 class DishIngredientsController extends Controller
 {
@@ -34,10 +32,7 @@ class DishIngredientsController extends Controller
 
         $this->view->render('Добавить состав', ['dishes' => $dishes, 'ingredients' => $ingredients]);
 
-		$boolean = isset($_POST['id_dish']) && !empty($_POST['id_dish']) && isset($_POST['id_ingredient'])
-			&& !empty($_POST['id_ingredient']) && isset($_POST['weight']) && !empty($_POST['weight']);
-
-		if ($boolean) {
+		if ($this->issetNotEmpty()) {
 			$this->model->id_dish = $_POST['id_dish'];
 			$this->model->id_ingredient = $_POST['id_ingredient'];
 			$this->model->weight = $_POST['weight'];
@@ -56,10 +51,7 @@ class DishIngredientsController extends Controller
         $weight = $this->fetch($sql)['weight'];
         $this->view->render('Обновить состав', ['id' => $this->matches(), 'weight' => $weight]);
 
-        $boolean = isset($_POST['id_dish']) && !empty($_POST['id_dish']) && isset($_POST['id_ingredient'])
-            && !empty($_POST['id_ingredient']) && isset($_POST['weight']) && !empty($_POST['weight']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id_dish = $id[0];
             $this->model->id_ingredient = $id[1];
             $this->model->weight = $_POST['weight'];
@@ -83,9 +75,7 @@ class DishIngredientsController extends Controller
         $this->view->render('Удалить состав', ['id' => $this->matches(), 'dish' => $dish['name'],
             'ingredient' => $ingredient['name']]);
 
-        $boolean = isset($_POST['delete']) && !empty($_POST['delete']);
-
-        if ($boolean) {
+        if ($this->issetNotEmpty()) {
             $this->model->id_dish = $id[0];
             $this->model->id_ingredient = $id[1];
             $this->model->delete();
@@ -100,23 +90,5 @@ class DishIngredientsController extends Controller
     {
         preg_match_all('!\d+:\d+$!', $_SERVER['REQUEST_URI'], $result);
         return $result['0']['0'];
-    }
-
-    /**
-     * @param $sql
-     * @return mixed
-     */
-    private function fetch($sql)
-    {
-        return DataBase::singleton()->query($sql)->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * @param $sql
-     * @return array
-     */
-    private function fetchAll($sql)
-    {
-        return DataBase::singleton()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
